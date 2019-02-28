@@ -1,0 +1,162 @@
+# Welcome to the IslandRate config.yml File!
+# If you have questions please contact
+# Yovez on Discord: @Yovez#1337
+
+# Here are the built-in IslandRate placeholders
+# NOTE: Some of these may return null or nothing due to inproper usage
+# %prefix% - The IslandRate prefix
+# %player% - The player's name
+# %player-stars% - The player's rating amount
+# %player-average% - The player's average rating amount
+# %player-total-voters% - The player's total number of voters
+# %cooldown% - Cooldown in seconds for the player till they can rate again
+# %opted-out-player% - True/False if the player has opted out of their island being rated
+# %target% - The target's name
+# %target-stars% - The target's rating amount
+# %target-average% - The target's average rating amount
+# %target-total-voters% - The target's total number of voters
+# %cooldown% - Cooldown in seconds for the target till they can rate again
+# %opted-out-target% - True/False if the target has opted out of their island being rated
+# %rating% - The rating amount used when rating an island
+# %top-place% - The top place number when listing top places
+
+# Disable if you don't want players to be able to change
+# their rating once they've rated an island, like a one-and-done rating.
+change-rating: true
+# Set this to true to prevent users from using the /rate command alone,
+# will default to opening the rate menu.
+disable-command-rating: false
+# Change the maximum command based rate value
+max-command-rating: 5
+# The minimum island level a user requires to have before they can rate islands.
+# CURRENTLY DISABLED
+min-island-level: 0
+# Set to true to send the island owner a message when someone rates their island.
+send-owner-message: false
+# Cooldown timer to rate islands.
+cooldown: 60
+# Set to true to shorten the placeholderapi placeholder prefix for islandrate
+# (i.e. %ir% instead of %islandrate% prefix).
+placeholderapi_shortened: false
+inv_check:
+  # Set to true to enable to inventory check feature with an automated timer
+  # This checks for cheated/glitched items from the menus of IslandRate.
+  enabled: false
+  # The time in seconds to automatically check for cheated/glitched items.
+  timer: 600
+logging:
+  # Set to true to enable the logging feature
+  enabled: false
+  # Set to true to log whenever a user rates someone's island.
+  rate-island: false
+# This is the rate menu
+menu:
+  # Set to true to enable the menu for /rate
+  enabled: false
+  # Set to true to be able to change the default items to custom items
+  # as listed below
+  custom: false
+  # This is the menu's inventory title
+  title: '&6&lRate &e%target%''s &6&lIsland &4(%target-stars%)'
+  size: 9
+  items:
+    skull:
+      slot: 0
+      amount: 1
+      display_name: '&r&c%target%'
+      lore:
+      - '&4Total Ratings: &c%target-stars%'
+    # The Item identifier, only for config file, must be unique!
+    help:
+      # The slot number the item will be in inside the menu
+      slot: 2
+      # The exact item material name (does not support numbers)
+      # Find all the Material Names here:
+      # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+      material: BOOK
+      # The amount of the item
+      amount: 1
+      # The name of the item to show, supports internal placeholders
+      # and colors
+      display_name: '&2Rating Info'
+      # The lore of the item, delete this section to remove the lore
+      lore:
+      - '&aRate the island'
+      - '&aChoose your rating 1-5'
+    rating-1:
+      rating: 1
+      slot: 4
+      material: EMERALD
+      amount: 1
+      display_name: '&41 &f= &4Terrible'
+      lore: []
+    rating-2:
+      rating: 2
+      slot: 5
+      material: EMERALD
+      amount: 2
+      display_name: '&c2 &f= &cPoor'
+      lore: []
+    rating-3:
+      rating: 3
+      slot: 6
+      material: EMERALD
+      amount: 3
+      display_name: '&e3 &f= &eOkay'
+      lore: []
+    rating-4:
+      rating: 4
+      slot: 7
+      material: EMERALD
+      amount: 4
+      display_name: '&a4 &f= &aGood'
+      lore: []
+    rating-5:
+      rating: 5
+      slot: 8
+      material: EMERALD
+      amount: 5
+      display_name: '&25 &f= &2Great'
+      lore: []
+island_menu:
+  enabled: false
+  custom: false
+  title: '&9IslandRate Menu'
+  items:
+    skull:
+      slot: 0
+      amount: 1
+      display_name: '&a%player%'
+      lore:
+      - '&6Total Ratings: &e%player-stars%'
+    opt-out:
+      slot: 2
+      material: BARRIER
+      amount: 1
+      display_name: '&bToggle Opted-Out'
+      lore:
+      - '&6&lOpted-Out&7: &e%opted-out-player%'
+top_menu:
+  enabled: false
+  teleport: false
+  title: '&6&lTop Rated Islands'
+  items:
+    skull:
+      display_name: '&a#%top-place% &r&f%target%'
+      lore:
+      - '&6Total Ratings: &e%target-stars%'
+sign:
+  open-rate-menu:
+    line-1: '&bOpen Rate Menu'
+  open-top-menu:
+    line-1: '&bOpen Top Ten'
+  show-top-list:
+    line-1: '&bList Top Ten'
+  rate-island:
+    line-1: '&bRate'
+    line-2: '%target%''s'
+    line-3: '&bIsland'
+  no-island-found:
+    line-1: '&cNo'
+    line-2: '&cIsland'
+    line-3: '&cFound'
