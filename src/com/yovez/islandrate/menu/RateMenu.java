@@ -8,16 +8,21 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import com.wasteofplastic.askyblock.Island;
 import com.yovez.islandrate.IslandRate;
+import com.yovez.islandrate.misc.ConfigItem;
 
 import net.md_5.bungee.api.ChatColor;
 
-public class RateMenu {
+public class RateMenu implements Listener {
 
 	final IslandRate plugin;
 	private Inventory inv;
@@ -35,13 +40,43 @@ public class RateMenu {
 		items = new ArrayList<ItemStack>();
 	}
 
+	@EventHandler
+	public void onMenuClick(InventoryClickEvent e) {
+		Player p = (Player) e.getWhoClicked();
+		Island island = plugin.getAskyblock().getIslandAt(p.getLocation());
+		if (island == null)
+			return;
+		OfflinePlayer op = Bukkit.getOfflinePlayer(island.getOwner());
+		RateMenu menu = new RateMenu(plugin, op);
+		if (!e.getInventory().getTitle().equals(menu.getInv().getTitle())) {
+			return;
+		}
+		e.setCancelled(true);
+		Bukkit.getServer().getScheduler().runTask(plugin, new Runnable() {
+
+			@Override
+			public void run() {
+				if (plugin.getConfig().getBoolean("menu.custom", false) == false)
+					menu.openInv(p);
+				else
+					menu.openCustomInv(p);
+			}
+
+		});
+		ConfigItem item = new ConfigItem(plugin, p);
+		if (item.getItems().containsKey(e.getCurrentItem()))
+			if (item.getItems().get(e.getCurrentItem()) > 0)
+				plugin.rateIsland(p, op, item.getItems().get(e.getCurrentItem()));
+
+	}
+
 	private String getTitle() {
 		return ChatColor.translateAlternateColorCodes('&', plugin.getMessage("menu.title", null, player, 0, 0));
 	}
 
 	@SuppressWarnings("deprecation")
 	public ItemStack getSkull() {
-		ItemStack item = new ItemStack(Material.SKULL, 1, (short) 3);
+		ItemStack item = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
 		SkullMeta meta = (SkullMeta) item.getItemMeta();
 		meta.setDisplayName("§r§f" + player.getName());
 		if (Bukkit.getVersion().contains("1.7") || Bukkit.getVersion().contains("1.8"))
@@ -125,7 +160,7 @@ public class RateMenu {
 						continue;
 					s = "menu.items." + s;
 					if (s.equalsIgnoreCase("menu.items.skull")) {
-						ItemStack item = new ItemStack(Material.SKULL, plugin.getConfig().getInt(s + ".amount"),
+						ItemStack item = new ItemStack(Material.SKULL_ITEM, plugin.getConfig().getInt(s + ".amount"),
 								(short) 3);
 						SkullMeta skullMeta = (SkullMeta) item.getItemMeta();
 						skullMeta.setDisplayName(plugin.getMessage(s + ".display_name", null, player, 0, 0));
