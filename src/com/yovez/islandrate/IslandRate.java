@@ -69,6 +69,7 @@ public class IslandRate extends JavaPlugin {
 			Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new InventoryCheck(this), 0L,
 					getConfig().getLong("inv_check.timer") * 1000);
 		new Metrics(this);
+		new Parser();
 	}
 
 	public static IslandRate getInstance() {

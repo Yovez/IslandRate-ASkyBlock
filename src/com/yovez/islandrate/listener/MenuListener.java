@@ -27,7 +27,6 @@ public class MenuListener implements Listener {
 		this.addon = addon;
 	}
 
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onMenuClick(InventoryClickEvent e) {
 
@@ -95,7 +94,6 @@ public class MenuListener implements Listener {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onIslandMenuClick(InventoryClickEvent e) {
 		Player p = (Player) e.getWhoClicked();
