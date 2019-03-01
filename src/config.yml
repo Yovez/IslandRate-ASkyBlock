@@ -29,7 +29,6 @@ disable-command-rating: false
 # Change the maximum command based rate value
 max-command-rating: 5
 # The minimum island level a user requires to have before they can rate islands.
-# CURRENTLY DISABLED
 min-island-level: 0
 # Set to true to send the island owner a message when someone rates their island.
 send-owner-message: false

@@ -152,6 +152,11 @@ public class IslandRate extends JavaPlugin {
 			p.sendMessage(getMessage("opted-out", p, op, 0, 0));
 			return;
 		}
+		if (getConfig().getInt("min-island-level", 0) > 0)
+			if (askyblock.getLongIslandLevel(p.getUniqueId()) < getConfig().getLong("min-island-level", 0)) {
+				p.sendMessage(getMessage("incorrect-level", p, op, 0, 0));
+				return;
+			}
 		if (getConfig().getBoolean("change-rating", true) == false) {
 			Connection conn = null;
 			PreparedStatement ps = null;
