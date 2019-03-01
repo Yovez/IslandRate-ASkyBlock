@@ -69,12 +69,18 @@ menu:
     help:
       # The slot number the item will be in inside the menu
       slot: 2
-      # The exact item material name (does not support numbers)
-      # Find all the Material Names here:
-      # https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+      # The Item's ID or Exact Material Name
+      # Find all the Item IDs/Names here:
+      # https://www.digminecraft.com/lists/item_id_list_pc_1_12.php
       material: BOOK
       # The amount of the item
       amount: 1
+      # The data/durability of the Item
+      # This value is NOT required, and defaults to 0.
+      # Example: You want mossy stone bricks...
+      # Set material to 98 OR STONEBRICK
+      # and set data to 1
+      data: 0
       # The name of the item to show, supports internal placeholders
       # and colors
       display_name: '&2Rating Info'

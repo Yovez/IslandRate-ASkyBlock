@@ -97,11 +97,17 @@ public class IslandRate extends JavaPlugin {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	public ItemStack getConfigItem(String path, OfflinePlayer op) {
 		if (!getConfig().contains(path))
 			return null;
-		ItemStack item = new ItemStack(Material.matchMaterial(getConfig().getString(path + ".material").toUpperCase()),
-				getConfig().getInt(path + ".amount", 1));
+		ItemStack item = null;
+		if (getConfig().isString(path + ".material"))
+			item = new ItemStack(Material.matchMaterial(getConfig().getString(path + ".material").toUpperCase()),
+					getConfig().getInt(path + ".amount", 1), (short) getConfig().getInt(path + ".data", 0));
+		else
+			item = new ItemStack(Material.getMaterial(getConfig().getInt(path + ".material")),
+					getConfig().getInt(path + ".amount", 1), (short) getConfig().getInt(path + ".data", 0));
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(getMessage(path + ".display_name", null, op, 0, 0));
 		meta.setLore(getConvertedLore(path, op));
