@@ -32,6 +32,9 @@ max-command-rating: 5
 min-island-level: 0
 # Set to true to send the island owner a message when someone rates their island.
 send-owner-message: false
+# Set to true to use the cache system (useful for larger servers, 
+# or if you experience lag with IslandRate)
+use-cache-system: false
 # Cooldown timer to rate islands.
 cooldown: 60
 # Set to true to shorten the placeholderapi placeholder prefix for islandrate
