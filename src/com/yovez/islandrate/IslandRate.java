@@ -24,7 +24,6 @@ import com.wasteofplastic.askyblock.ASkyBlockAPI;
 import com.wasteofplastic.askyblock.Island;
 import com.yovez.islandrate.api.IslandRateAPI;
 import com.yovez.islandrate.command.RateCommand;
-import com.yovez.islandrate.listener.PlayerListener;
 import com.yovez.islandrate.listener.SignListener;
 import com.yovez.islandrate.menu.IslandMenu;
 import com.yovez.islandrate.menu.RateMenu;
@@ -34,7 +33,6 @@ import com.yovez.islandrate.misc.InventoryCheck;
 import com.yovez.islandrate.misc.Metrics;
 import com.yovez.islandrate.misc.MySQL;
 import com.yovez.islandrate.misc.Placeholders;
-import com.yovez.islandrate.util.Cache;
 import com.yovez.islandrate.util.DbUtils;
 import com.yovez.islandrate.util.Parser;
 
@@ -44,7 +42,6 @@ public class IslandRate extends JavaPlugin {
 	private ASkyBlockAPI askyblock;
 	private IslandRateAPI api;
 	private Map<UUID, Long> cooldown;
-	private Cache cache;
 	private CustomConfig messages, optOut, storage;
 
 	private static IslandRate plugin;
@@ -70,11 +67,6 @@ public class IslandRate extends JavaPlugin {
 		Bukkit.getServer().getPluginManager().registerEvents(new TopMenu(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new IslandMenu(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new SignListener(this), this);
-		if (plugin.getConfig().getBoolean("use-cache-system", false) == true) {
-			cache = new Cache(this);
-			Bukkit.getServer().getScheduler().runTaskAsynchronously(this, cache);
-			Bukkit.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
-		}
 		if (plugin.getConfig().getInt("cooldown", 60) > 0)
 			cooldown = new HashMap<UUID, Long>();
 		if (getConfig().getBoolean("inv_check.enabled", false) == true)
@@ -329,9 +321,5 @@ public class IslandRate extends JavaPlugin {
 
 	public Map<UUID, Long> getCooldowns() {
 		return cooldown;
-	}
-
-	public Cache getCache() {
-		return cache;
 	}
 }
