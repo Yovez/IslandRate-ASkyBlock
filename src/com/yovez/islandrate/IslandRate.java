@@ -72,7 +72,6 @@ public class IslandRate extends JavaPlugin {
 		Bukkit.getServer().getPluginManager().registerEvents(new SignListener(this), this);
 		if (plugin.getConfig().getBoolean("use-cache-system", false) == true) {
 			cache = new Cache(this);
-			Bukkit.getServer().getScheduler().runTaskAsynchronously(this, cache);
 			Bukkit.getServer().getPluginManager().registerEvents(new PlayerListener(this), this);
 		}
 		if (plugin.getConfig().getInt("cooldown", 60) > 0)
