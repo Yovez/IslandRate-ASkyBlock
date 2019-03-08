@@ -47,16 +47,16 @@ public class RateCommand implements CommandExecutor {
 			if (!(sender instanceof Player)) {
 				if (args.length == 0) {
 					sender.sendMessage("IslandRate console commands:");
-					sender.sendMessage(new String[] { "/rate reset <player|all>" });
+					sender.sendMessage("/rate reset <player|all>");
 					return true;
 				}
 				if (args.length == 1) {
 					if (args[0].equalsIgnoreCase("reset")) {
-						sender.sendMessage(new String[] { "Try /rate reset <player|all>" });
+						sender.sendMessage("Try /rate reset <player|all>");
 						return true;
 					}
 					sender.sendMessage("IslandRate console commands:");
-					sender.sendMessage(new String[] { "/rate reset <player|all>" });
+					sender.sendMessage("/rate reset <player|all>");
 					return true;
 				}
 				if (args.length == 2) {
@@ -96,6 +96,10 @@ public class RateCommand implements CommandExecutor {
 			}
 			if (args.length == 0) {
 				if (menu) {
+					if (plugin.getAskyblock().getIslandAt(p.getLocation()) == null) {
+						p.sendMessage(noIsland);
+						return true;
+					}
 					if (plugin.getAskyblock().getIslandAt(p.getLocation()).getOwner().equals(p.getUniqueId())) {
 						if (plugin.getConfig().getBoolean("island_menu.enabled", false) == true) {
 							IslandMenu im = new IslandMenu(plugin, p);
