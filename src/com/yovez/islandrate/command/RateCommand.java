@@ -210,17 +210,13 @@ public class RateCommand implements CommandExecutor {
 					p.sendMessage(commandDisabled);
 					return true;
 				}
-				if (plugin.getAskyblock().getIslandAt(p.getLocation()).getOwner().equals(p.getUniqueId())) {
-					p.sendMessage(ownedIsland);
-					return true;
-				}
-				if (plugin.getAskyblock().getIslandAt(p.getLocation()).getOwner().equals(p.getUniqueId())) {
-					p.sendMessage(ownedIsland);
-					return true;
-				}
 				Island island = plugin.getAskyblock().getIslandAt(p.getLocation());
 				if (island == null) {
 					p.sendMessage(noIsland);
+					return true;
+				}
+				if (island.getOwner().equals(p.getUniqueId())) {
+					p.sendMessage(ownedIsland);
 					return true;
 				}
 				if (island.getMembers().contains(p.getUniqueId())) {
