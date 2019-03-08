@@ -34,8 +34,8 @@ public class IslandRateAPI {
 	}
 
 	public OfflinePlayer getTopRated(int topPlace) {
-		if (plugin.getConfig().getBoolean("use-cache-system", false))
-			return Bukkit.getOfflinePlayer(plugin.getCache().getTopTen().get(topPlace));
+		//if (plugin.getConfig().getBoolean("use-cache-system", false))
+		//	return Bukkit.getOfflinePlayer(plugin.getCache().getTopTen().get(topPlace));
 		OfflinePlayer op = null;
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -93,8 +93,8 @@ public class IslandRateAPI {
 	public int getTotalRatings(OfflinePlayer p) {
 		if (p == null)
 			return 0;
-		if (plugin.getConfig().getBoolean("use-cache-system", false))
-			return plugin.getCache().getRatings(p);
+		//if (plugin.getConfig().getBoolean("use-cache-system", false))
+		//	return plugin.getCache().getRatings(p);
 		int votes = 0;
 		Connection conn = null;
 		PreparedStatement ps = null;
