@@ -31,14 +31,14 @@ import com.yovez.islandrate.menu.TopMenu;
 import com.yovez.islandrate.misc.CustomConfig;
 import com.yovez.islandrate.misc.InventoryCheck;
 import com.yovez.islandrate.misc.Metrics;
-import com.yovez.islandrate.misc.MySQL;
+import com.yovez.islandrate.misc.SQL;
 import com.yovez.islandrate.misc.Placeholders;
 import com.yovez.islandrate.util.DbUtils;
 import com.yovez.islandrate.util.Parser;
 
 public class IslandRate extends JavaPlugin {
 
-	private MySQL mysql;
+	private SQL mysql;
 	private ASkyBlockAPI askyblock;
 	private IslandRateAPI api;
 	private Map<UUID, Long> cooldown;
@@ -65,7 +65,7 @@ public class IslandRate extends JavaPlugin {
 		storage.saveDefaultConfig();
 		askyblock = ASkyBlockAPI.getInstance();
 		api = IslandRateAPI.getInstance();
-		mysql = MySQL.getInstance();
+		mysql = SQL.getInstance();
 		getCommand("rate").setExecutor(new RateCommand(this));
 		if (Bukkit.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
 			new Placeholders(this);
@@ -313,7 +313,7 @@ public class IslandRate extends JavaPlugin {
 		return askyblock;
 	}
 
-	public MySQL getMySQL() {
+	public SQL getMySQL() {
 		return mysql;
 	}
 

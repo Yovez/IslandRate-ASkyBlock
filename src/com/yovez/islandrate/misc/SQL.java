@@ -16,21 +16,21 @@ import com.yovez.islandrate.IslandRate;
 import com.yovez.islandrate.api.IslandRateAPI;
 import com.yovez.islandrate.util.DbUtils;
 
-public class MySQL {
+public class SQL {
 
 	final IslandRate plugin;
 	private Connection connection;
 	private String host, port, database, username, password, storageType;
 
-	private static MySQL instance;
+	private static SQL instance;
 
-	public static MySQL getInstance() {
+	public static SQL getInstance() {
 		if (instance == null)
-			new MySQL(IslandRate.getInstance());
+			new SQL(IslandRate.getInstance());
 		return instance;
 	}
 
-	protected MySQL(IslandRate plugin) {
+	protected SQL(IslandRate plugin) {
 		this.plugin = plugin;
 		instance = this;
 		storageType = getConfig().getString("type", "SQLITE");
