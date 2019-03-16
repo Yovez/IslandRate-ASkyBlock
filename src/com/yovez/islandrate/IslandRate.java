@@ -42,7 +42,12 @@ public class IslandRate extends JavaPlugin {
 	private ASkyBlockAPI askyblock;
 	private IslandRateAPI api;
 	private Map<UUID, Long> cooldown;
-	// private Cache cache;
+	private boolean usingCache;
+	private Map<UUID, Integer> userRating;
+	private Map<UUID, Double> userAverage;
+	private Map<UUID, Integer> userRaters;
+	private Map<Integer, UUID> topRated;
+	private int totalRatings;
 	private CustomConfig messages, optOut, storage;
 
 	private static IslandRate plugin;
@@ -51,6 +56,7 @@ public class IslandRate extends JavaPlugin {
 	public void onEnable() {
 		plugin = this;
 		saveDefaultConfig();
+		usingCache = false;
 		messages = new CustomConfig(this, "messages");
 		messages.saveDefaultConfig();
 		optOut = new CustomConfig(this, "opt-out");
@@ -68,14 +74,13 @@ public class IslandRate extends JavaPlugin {
 		Bukkit.getServer().getPluginManager().registerEvents(new TopMenu(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new IslandMenu(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new SignListener(this), this);
-		/*
-		 * if (plugin.getConfig().getBoolean("use-cache-system", false) == true) { cache
-		 * = new Cache(this);
-		 * Bukkit.getServer().getScheduler().runTaskAsynchronously(this, cache);
-		 * Bukkit.getServer().getPluginManager().registerEvents(new
-		 * PlayerListener(this), this); }
-		 */
-		// Keep cache to dev builds only...
+		if (plugin.getConfig().getBoolean("use-cache-system", false) == true) {
+			usingCache = true;
+			userRating = new HashMap<>();
+			userAverage = new HashMap<>();
+			userRaters = new HashMap<>();
+			topRated = new HashMap<>();
+		}
 		if (plugin.getConfig().getInt("cooldown", 60) > 0)
 			cooldown = new HashMap<UUID, Long>();
 		if (getConfig().getBoolean("inv_check.enabled", false) == true)
@@ -332,7 +337,48 @@ public class IslandRate extends JavaPlugin {
 		return cooldown;
 	}
 
-	/*
-	 * public Cache getCache() { return cache; }
-	 */
+	public Map<UUID, Integer> getUserRating() {
+		return userRating;
+	}
+
+	public int getUserRating(UUID id) {
+		return userRating.get(id);
+	}
+
+	public Map<UUID, Double> getUserAverage() {
+		return userAverage;
+	}
+
+	public double getUserAverage(UUID id) {
+		return userAverage.get(id);
+	}
+
+	public Map<UUID, Integer> getUserRaters() {
+		return userRaters;
+	}
+
+	public int getUserRaters(UUID id) {
+		return userRaters.get(id);
+	}
+
+	public int getTotalRatings() {
+		return totalRatings;
+	}
+
+	public void setTotalRatings(int totalRatings) {
+		this.totalRatings = totalRatings;
+	}
+
+	public Map<Integer, UUID> getTopRated() {
+		return topRated;
+	}
+
+	public OfflinePlayer getTopRated(int place) {
+		return Bukkit.getOfflinePlayer(topRated.get(place));
+	}
+
+	public boolean isUsingCache() {
+		return usingCache;
+	}
+
 }

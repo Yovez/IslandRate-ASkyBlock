@@ -40,15 +40,17 @@ public class TopMenu implements Listener {
 		}
 		e.setCancelled(true);
 		if (plugin.getConfig().getBoolean("top_menu.teleport", false) == true) {
-			SkullMeta meta = (SkullMeta) e.getCurrentItem().getItemMeta();
-			Location loc;
-			if (!Bukkit.getVersion().contains("1.12")) {
-				loc = plugin.getAskyblock().getIslandOwnedBy(Bukkit.getOfflinePlayer(meta.getOwner()).getUniqueId())
-						.getSpawnPoint();
-			} else
-				loc = plugin.getAskyblock().getIslandOwnedBy(meta.getOwningPlayer().getUniqueId()).getSpawnPoint();
-			if (loc != null) {
-				e.getWhoClicked().teleport(loc);
+			if (e.getCurrentItem().getType().equals(Material.SKULL_ITEM)) {
+				SkullMeta meta = (SkullMeta) e.getCurrentItem().getItemMeta();
+				Location loc;
+				if (!Bukkit.getVersion().contains("1.12")) {
+					loc = plugin.getAskyblock().getIslandOwnedBy(Bukkit.getOfflinePlayer(meta.getOwner()).getUniqueId())
+							.getSpawnPoint();
+				} else
+					loc = plugin.getAskyblock().getIslandOwnedBy(meta.getOwningPlayer().getUniqueId()).getSpawnPoint();
+				if (loc != null) {
+					e.getWhoClicked().teleport(loc);
+				}
 			}
 		}
 	}

@@ -34,8 +34,8 @@ public class IslandRateAPI {
 	}
 
 	public OfflinePlayer getTopRated(int topPlace) {
-		//if (plugin.getConfig().getBoolean("use-cache-system", false))
-		//	return Bukkit.getOfflinePlayer(plugin.getCache().getTopTen().get(topPlace));
+		if (plugin.isUsingCache() && plugin.getTopRated().get(topPlace) != null)
+			return plugin.getTopRated(topPlace);
 		OfflinePlayer op = null;
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -48,7 +48,8 @@ public class IslandRateAPI {
 			if (rs.next()) {
 				if (UUID.fromString(rs.getString("player_uuid")) == null)
 					return null;
-				return Bukkit.getOfflinePlayer(UUID.fromString(rs.getString("player_uuid")));
+				op = Bukkit.getOfflinePlayer(UUID.fromString(rs.getString("player_uuid")));
+				plugin.getTopRated().put(topPlace, op.getUniqueId());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -65,6 +66,8 @@ public class IslandRateAPI {
 	}
 
 	public int getTotalRatings() {
+		if (plugin.isUsingCache() && plugin.getTotalRatings() > 0)
+			return plugin.getTotalRatings();
 		int votes = 0;
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -87,14 +90,15 @@ public class IslandRateAPI {
 				e.printStackTrace();
 			}
 		}
+		plugin.setTotalRatings(votes);
 		return votes;
 	}
 
 	public int getTotalRatings(OfflinePlayer p) {
 		if (p == null)
 			return 0;
-		//if (plugin.getConfig().getBoolean("use-cache-system", false))
-		//	return plugin.getCache().getRatings(p);
+		if (plugin.isUsingCache() && plugin.getUserRating().get(p.getUniqueId()) != null)
+			return plugin.getUserRating(p.getUniqueId());
 		int votes = 0;
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -117,20 +121,28 @@ public class IslandRateAPI {
 				e.printStackTrace();
 			}
 		}
+		plugin.getUserRating().put(p.getUniqueId(), votes);
 		return votes;
 	}
 
 	public double getAverageRating(OfflinePlayer p) {
 		if (p == null)
 			return 0.0;
+		double average = 0.0;
+		if (plugin.isUsingCache() && plugin.getUserAverage().get(p.getUniqueId()) != null)
+			return plugin.getUserAverage(p.getUniqueId());
 		if (getTotalNumOfRaters(p) == 0)
 			return getTotalRatings(p);
-		return getTotalRatings(p) / getTotalNumOfRaters(p);
+		average = getTotalRatings(p) / getTotalNumOfRaters(p);
+		plugin.getUserAverage().put(p.getUniqueId(), average);
+		return average;
 	}
 
 	public int getTotalNumOfRaters(OfflinePlayer p) {
 		if (p == null)
 			return 0;
+		if (plugin.isUsingCache() && plugin.getUserRaters().get(p.getUniqueId()) != null)
+			return plugin.getUserRaters(p.getUniqueId());
 		int raters = 0;
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -154,6 +166,7 @@ public class IslandRateAPI {
 				e.printStackTrace();
 			}
 		}
+		plugin.getUserRaters().put(p.getUniqueId(), raters);
 		return raters;
 	}
 
