@@ -139,10 +139,15 @@ public class IslandRateAPI {
 	}
 
 	public int getTotalNumOfRaters(OfflinePlayer p) {
+		return getTotalNumOfRaters(p, false);
+	}
+
+	public int getTotalNumOfRaters(OfflinePlayer p, boolean skipCache) {
 		if (p == null)
 			return 0;
-		if (plugin.isUsingCache() && plugin.getUserRaters().get(p.getUniqueId()) != null)
-			return plugin.getUserRaters(p.getUniqueId());
+		if (!skipCache)
+			if (plugin.isUsingCache() && plugin.getUserRaters().get(p.getUniqueId()) != null)
+				return plugin.getUserRaters(p.getUniqueId());
 		int raters = 0;
 		Connection conn = null;
 		PreparedStatement ps = null;

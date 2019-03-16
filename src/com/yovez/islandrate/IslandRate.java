@@ -31,8 +31,8 @@ import com.yovez.islandrate.menu.TopMenu;
 import com.yovez.islandrate.misc.CustomConfig;
 import com.yovez.islandrate.misc.InventoryCheck;
 import com.yovez.islandrate.misc.Metrics;
-import com.yovez.islandrate.misc.SQL;
 import com.yovez.islandrate.misc.Placeholders;
+import com.yovez.islandrate.misc.SQL;
 import com.yovez.islandrate.util.DbUtils;
 import com.yovez.islandrate.util.Parser;
 
@@ -288,6 +288,8 @@ public class IslandRate extends JavaPlugin {
 				e.printStackTrace();
 			}
 		}
+		if (usingCache)
+			userRating.put(op.getUniqueId(), (totalRatings + rating) - previousRating);
 		p.playSound(p.getLocation(),
 				Sound.valueOf(Bukkit.getVersion().contains("1.7") || Bukkit.getVersion().contains("1.8") ? "LEVEL_UP"
 						: "ENTITY_PLAYER_LEVELUP"),
