@@ -159,11 +159,12 @@ public class RateCommand implements CommandExecutor {
 					}
 					try {
 						plugin.getMySQL().convertFromFile();
-						p.sendMessage("§aMigrated from file storage to MySQL/SQLite storage successfully!");
 					} catch (SQLException | ClassNotFoundException e) {
 						e.printStackTrace();
 						p.sendMessage("§cMigrated from file storage to MySQL/SQLite storage unsuccessfully :("
 								+ " Please contact the Developer!");
+					} finally {
+						p.sendMessage("§aMigrated from file storage to MySQL/SQLite storage successfully!");
 					}
 					return true;
 				}

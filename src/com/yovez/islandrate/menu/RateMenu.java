@@ -16,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import com.wasteofplastic.askyblock.ASkyBlock;
 import com.wasteofplastic.askyblock.Island;
 import com.yovez.islandrate.IslandRate;
 import com.yovez.islandrate.misc.ConfigItem;
@@ -43,7 +44,7 @@ public class RateMenu implements Listener {
 	@EventHandler
 	public void onMenuClick(InventoryClickEvent e) {
 		Player p = (Player) e.getWhoClicked();
-		Island island = plugin.getAskyblock().getIslandAt(p.getLocation());
+		Island island = ASkyBlock.getPlugin().getGrid().getIslandAt(p.getLocation());
 		if (island == null)
 			return;
 		OfflinePlayer op = Bukkit.getOfflinePlayer(island.getOwner());
@@ -71,6 +72,13 @@ public class RateMenu implements Listener {
 	}
 
 	private String getTitle() {
+		if (plugin.getMessage("menu.title", null, player, 0, 0).length() > 32) {
+			Bukkit.getConsoleSender().sendMessage(new String[] {
+					"§2[IslandRate] §4WARNING: §cAn error occured when opening " + player.getName() + "'s Rate Menu.",
+					"§2[IslandRate] §4Error: §cRate Menu's Inventory title cannot be longer than 32 characters.",
+					"§2[IslandRate] §cPlease adjust the Title via the config.yml file to be no longer than 32 characters." });
+			return plugin.getMessage("menu.title", null, player, 0, 0).substring(0, 32);
+		}
 		return ChatColor.translateAlternateColorCodes('&', plugin.getMessage("menu.title", null, player, 0, 0));
 	}
 

@@ -74,7 +74,7 @@ public class IslandRate extends JavaPlugin {
 		Bukkit.getServer().getPluginManager().registerEvents(new TopMenu(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new IslandMenu(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new SignListener(this), this);
-		if (plugin.getConfig().getBoolean("use-cache-system", false) == true) {
+		if (plugin.getConfig().getBoolean("use-cache-system", true) == true) {
 			usingCache = true;
 			userRating = new HashMap<>();
 			userAverage = new HashMap<>();

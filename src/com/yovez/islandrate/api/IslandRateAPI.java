@@ -175,6 +175,37 @@ public class IslandRateAPI {
 		return raters;
 	}
 
+	public boolean hasRated(OfflinePlayer rater, OfflinePlayer ratee) {
+		if (rater == null)
+			return false;
+		if (ratee == null)
+			return false;
+		boolean hasRated = false;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			conn = plugin.getMySQL().getConnection();
+			ps = conn.prepareStatement("SELECT * FROM island_ratings WHERE player_uuid = ? AND rater_uuid;");
+			ps.setString(1, ratee.getUniqueId().toString());
+			ps.setString(2, rater.getUniqueId().toString());
+			rs = ps.executeQuery();
+			if (rs.next())
+				hasRated = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				DbUtils.close(rs);
+				DbUtils.close(ps);
+				DbUtils.close(conn);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return hasRated;
+	}
+
 	public boolean isInt(String s) {
 		try {
 			Integer.parseInt(s);

@@ -1,5 +1,6 @@
 package com.yovez.islandrate.misc;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.yovez.islandrate.IslandRate;
@@ -55,6 +56,18 @@ public class Placeholders extends PlaceholderHook {
 			return String.valueOf(api.getTotalRatings());
 		if (label.equalsIgnoreCase("total_ratings_player"))
 			return String.valueOf(api.getTotalRatings(p));
+		if (label.equalsIgnoreCase("can_rate"))
+			if (plugin.getAskyblock().getIslandAt(p.getLocation()) != null)
+				if (plugin.getAskyblock().getIslandAt(p.getLocation()).getOwner().equals(p.getUniqueId()))
+					return "false";
+				else {
+					boolean hasRated = api.hasRated(p,
+							Bukkit.getOfflinePlayer(plugin.getAskyblock().getIslandAt(p.getLocation()).getOwner()));
+					if (hasRated == true)
+						return "already";
+					else
+						return "true";
+				}
 		return null;
 	}
 
