@@ -46,6 +46,8 @@ public class RateMenu implements Listener {
 		Island island = plugin.getAskyblock().getIslandAt(p.getLocation());
 		if (island == null)
 			return;
+		if (island.getOwner() == null)
+			return;
 		OfflinePlayer op = Bukkit.getOfflinePlayer(island.getOwner());
 		RateMenu menu = new RateMenu(plugin, op);
 		if (!e.getInventory().getTitle().equals(menu.getInv().getTitle())) {
