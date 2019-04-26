@@ -56,8 +56,8 @@ public class Placeholders extends PlaceholderHook {
 			return String.valueOf(api.getTotalRatings());
 		if (label.equalsIgnoreCase("total_ratings_player"))
 			return String.valueOf(api.getTotalRatings(p));
-		if (label.equalsIgnoreCase("can_rate"))
-			if (plugin.getAskyblock().getIslandAt(p.getLocation()) != null)
+		if (label.equalsIgnoreCase("can_rate")) {
+			if (plugin.getAskyblock().getIslandAt(p.getLocation()) != null) {
 				if (plugin.getAskyblock().getIslandAt(p.getLocation()).getOwner().equals(p.getUniqueId()))
 					return "false";
 				else {
@@ -68,6 +68,10 @@ public class Placeholders extends PlaceholderHook {
 					else
 						return "true";
 				}
+			} else {
+				return "false";
+			}
+		}
 		return null;
 	}
 
