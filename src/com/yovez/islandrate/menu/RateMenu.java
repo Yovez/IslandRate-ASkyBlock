@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -19,8 +20,6 @@ import org.bukkit.inventory.meta.SkullMeta;
 import com.wasteofplastic.askyblock.Island;
 import com.yovez.islandrate.IslandRate;
 import com.yovez.islandrate.misc.ConfigItem;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class RateMenu implements Listener {
 
